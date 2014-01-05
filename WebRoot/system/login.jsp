@@ -54,6 +54,7 @@ window.attachEvent("onload", correctPNG);
 .STYLE1 {
 	color: #FF0000;
 	font-weight: bold;
+	font-size:12px;
 }
 -->
 </style>

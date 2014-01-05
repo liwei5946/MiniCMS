@@ -29,7 +29,7 @@ public class LoginFilter implements Filter {
 
     public static final String LOGIN_PAGE = "/index.jsp";
     public static final String LOGOUT_PAGE = "/index.jsp";
-    public static final String[] EXCEPT_PAGE = {"login.jsp","index.jsp","article.jsp","list_article.jsp","404.jsp","ad.jsp"};//不参与验证的页面
+    public static final String[] EXCEPT_PAGE = {"login.jsp","index.jsp","article.jsp","list_article.jsp","404.jsp","gallery.jsp"};//不参与验证的页面
     protected final Logger log = Logger.getLogger(LoginFilter.class.getName());
     public void destroy() {
 

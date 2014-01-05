@@ -3,6 +3,8 @@
 
 <%
 ArrayList list = new ArrayList();
+ArrayList list1 = new ArrayList();
+
 String realPath = request.getRealPath("\\WEB-INF\\db\\hbcitsoftware.mdb");//Access数据库绝对路径
 String type = request.getParameter("tID");
 String typeName = "";
@@ -25,6 +27,7 @@ if(pageNum == null ||pageNum.equals("")){
 ConnBean cb = new ConnBean();
 cb.getConn(realPath);
 list = cb.selectNewsForInnerobtainjsp(40, realType, pageNum, pageSize);
+list1 = cb.selectGalleryThumb("6", 1);//相册1(专业风采)的缩略图查询4张
 typeName = cb.selectNewsTypeByTypeId(realType);
 cb.setInnerInfoForTypePageCount(realType);
 cb.close();
@@ -34,6 +37,7 @@ pageContext.setAttribute("pageCount",new Integer(cb.getPageCount()));
 pageContext.setAttribute("nowPage",new Integer(cb.getShowPage()));
 pageContext.setAttribute("pageSize",new Integer(pageSize));
 pageContext.setAttribute("typeName",typeName);
+pageContext.setAttribute("thumb1",list1);
 //System.out.println(pageContext.getAttribute("nowPage"));
 //System.out.println(pageContext.getAttribute("pageCount"));
 %>
@@ -167,12 +171,9 @@ pageContext.setAttribute("typeName",typeName);
 						<ul>
 							<li>
                             <div id="gallery">
-								<a href="images/computer.png"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-3.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-4.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
+								<c:forEach var="mynews" items="${pageScope.thumb1}" varStatus="countItem">
+								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+								</c:forEach>
                             </div>
 								<span class="clearfix"></span>
 							</li>

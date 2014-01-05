@@ -23,6 +23,7 @@ public class DBBean {
 	private String ip;
 	private String loginState;
 	private String filename;
+	private String thumb;
 	private String oldname;
 	private String filesize;
 	private String typeName;
@@ -142,6 +143,18 @@ public class DBBean {
 	 */
 	public void setViewCount(int viewCount) {
 		this.viewCount = viewCount;
+	}
+	/**
+	 * @return the thumb
+	 */
+	public String getThumb() {
+		return thumb;
+	}
+	/**
+	 * @param thumb the thumb to set
+	 */
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
 	}
 
 }

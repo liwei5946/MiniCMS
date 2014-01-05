@@ -366,6 +366,36 @@ public class ConnBean {
 	  }
 	  return list;
   }
+  /**
+   * 检索相册缩略图
+   * @param count 检索缩略图数量
+   * @param type 相册类型
+   * @return
+   */
+  public ArrayList selectGalleryThumb(String count, int type){
+	  ArrayList list = new ArrayList();
+	  //int articleId = Integer.parseInt(id);
+	  Clob myClob;
+	  try{
+		  String SQL = "SELECT TOP " + count + " title,thumb,imagepath FROM gallery INNER JOIN gallerytype ON gallery.type=gallerytype.id WHERE gallery.type = ? ORDER BY gallery.publishtime DESC";
+		  pStatement = conn.prepareStatement(SQL);
+		  pStatement.setInt(1, type);
+		  rs = pStatement.executeQuery();
+		  
+		  while (rs.next()) {
+		    	DBBean db = new DBBean();
+
+		        db.setTitle(rs.getString("title"));
+		        db.setThumb(rs.getString("thumb"));
+		        db.setFilename(rs.getString("imagepath"));
+		        
+		        list.add(db);
+		      }
+	  }catch(SQLException sqlE){
+		  log.error(sqlE);
+	  }
+	  return list;
+  }
   
   /**
    * 删除文章
@@ -551,6 +581,46 @@ public class ConnBean {
 		  pStatement.setString(3, uploadTime);
 		  pStatement.setString(4, fileSize);
 		  pStatement.setString(5, uploader);
+
+		  state = pStatement.executeUpdate();
+		  
+		  if(state > 0){
+			  flag = true;
+		  }
+		  
+	  }catch(SQLException sqlE){
+		  log.error(sqlE);
+	  }
+	  return flag;
+  }
+  /**
+   * 将相册图片信息存入数据库
+   * @param title
+   * @param publishtime
+   * @param author
+   * @param content
+   * @param imagepath
+   * @param thumb
+   * @param type
+   * @param shorttime
+   * @return
+   */
+  public boolean addGallery2DB(String title, String publishtime, String author, String content, String imagepath, String thumb, int type, String shorttime){
+	  boolean flag = false;
+	  int state = 0;
+	  try{
+		  String SQL = "INSERT INTO gallery (title,publishtime,author,content,imagepath,thumb,type,shorttime) VALUES (?,?,?,?,?,?,?,?)";
+		  pStatement = conn.prepareStatement(SQL);
+		  pStatement.setString(1, title);
+		  pStatement.setString(2, publishtime);
+		  pStatement.setString(3, author);
+		  //数据量大的字段，使用clob
+		  java.io.Reader clobReader = new java.io.StringReader(content);
+		  pStatement.setCharacterStream(4, clobReader, content.length());
+		  pStatement.setString(5, imagepath);
+		  pStatement.setString(6, thumb);
+		  pStatement.setInt(7, type);
+		  pStatement.setString(8, shorttime);
 
 		  state = pStatement.executeUpdate();
 		  
@@ -761,6 +831,31 @@ public class ConnBean {
 		  ArrayList list = new ArrayList();
 		  try{
 			  String SQL = "SELECT id,typename FROM articletype";
+			  pStatement = conn.prepareStatement(SQL);
+			  rs = pStatement.executeQuery();
+			  
+			  while (rs.next()) {
+			    	DBBean db = new DBBean();
+			    	db.setId(rs.getInt("id"));
+			        db.setTypeName(rs.getString("typename"));
+			        
+			        list.add(db);
+			        log.debug("查询成功！");
+			      }
+		  }catch(SQLException sqlE){
+			  log.error(sqlE);
+		  }
+		  return list;
+	  }
+	  
+	  /**
+	   * 查询相册类型
+	   * @return ArrayList
+	   */
+	  public ArrayList selectGalleryType(){
+		  ArrayList list = new ArrayList();
+		  try{
+			  String SQL = "SELECT id,typename FROM gallerytype";
 			  pStatement = conn.prepareStatement(SQL);
 			  rs = pStatement.executeQuery();
 			  

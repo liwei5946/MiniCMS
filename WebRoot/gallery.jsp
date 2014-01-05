@@ -1,16 +1,43 @@
 <%@ page language="java" import="java.util.*,cn.edu.hbcit.jsj.software.bean.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-ArrayList list1 = new ArrayList();
 
+<%
+ArrayList list = new ArrayList();
 String realPath = request.getRealPath("\\WEB-INF\\db\\hbcitsoftware.mdb");//Access数据库绝对路径
+String type = request.getParameter("tID");
+String typeName = "";
+int realType = 1;
+if(type == null){
+	type = "1";
+}
+if(type.equals("1")){
+	realType = 1;
+}else if(type.equals("2")){
+	realType = 2;
+}else if(type.equals("3")){
+	realType = 3;
+}
+int pageSize = 30;//设置每页显示记录数
+String pageNum = request.getParameter("jump");
+if(pageNum == null ||pageNum.equals("")){
+	pageNum = "1";
+}
 ConnBean cb = new ConnBean();
 cb.getConn(realPath);
-list1 = cb.selectGalleryThumb("6", 1);//相册1(专业风采)的缩略图查询4张
+list = cb.selectNewsForInnerobtainjsp(40, realType, pageNum, pageSize);
+typeName = cb.selectNewsTypeByTypeId(realType);
+cb.setInnerInfoForTypePageCount(realType);
 cb.close();
-
-pageContext.setAttribute("thumb1",list1);
+pageContext.setAttribute("news",list);
+pageContext.setAttribute("maxCount",new Integer(cb.getRsCount()));
+pageContext.setAttribute("pageCount",new Integer(cb.getPageCount()));
+pageContext.setAttribute("nowPage",new Integer(cb.getShowPage()));
+pageContext.setAttribute("pageSize",new Integer(pageSize));
+pageContext.setAttribute("typeName",typeName);
+//System.out.println(pageContext.getAttribute("nowPage"));
+//System.out.println(pageContext.getAttribute("pageCount"));
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>                                                                                                                                              
@@ -140,9 +167,12 @@ pageContext.setAttribute("thumb1",list1);
 						<ul>
 							<li>
                             <div id="gallery">
-								<c:forEach var="mynews" items="${pageScope.thumb1}" varStatus="countItem">
-								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
-								</c:forEach>
+								<a href="images/computer.png"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-3.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-4.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
                             </div>
 								<span class="clearfix"></span>
 							</li>
@@ -151,68 +181,26 @@ pageContext.setAttribute("thumb1",list1);
 					
 				</ul><!-- end of sidebar list -->
 			</div><!-- end of #sidebar-->
-			<div id="wide-column">
-				<h2>404 Error Page</h2>
+            <div id="wide-column">
+				<h2>Latest Works</h2>
 				<img class="shade" src="images/heading-shade.png" alt="" />
-				<div id="posts" class="blog">
-					<div class="each-post postcontent">			        	
-			        	<div class="the-post">
-							
-            <div align="center">
-              <!--中栏内容填入此处以下 begin-->
-              <TABLE border=0 align="center" cellPadding=0 cellSpacing=0>
-  <TBODY>
-    <TR>
-      <TD width=8 height=8><IMG height=8 src="img/border/a_1.gif" 
+				<div id="posts" class="portfolio">
+                <!--each block begin-->
+                <div class="each-post postcontent" id="gallery">
+                	
+                    <a href="images/dummy-portfolio-item1.jpg"><img src="images/dummy-portfolio-item1.jpg" alt="Lorem Ipsum Dolor Sit Amet Consecta" class="post-thumb"/></a>
+                    
+                    <h4 class="portfolio-titles">Lorem Ipsum Dolor Sit Amet Consecta</h4>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem asi architecto beatae vitae dicta sunt explicabo.</p>			
+                    <p><a href="images/dummy-portfolio-item1.jpg" class="bt arrowedbt"><span>点击查看大图</span></a></p>
+                </div>					
+                <!--each block end-->
+							<a href="#" class="bt arrowedbt left left-button"><span>Previous Page</span></a>
+<p class="right"><a href="#" class="bt arrowedbt"><span>Next Page</span></a></p>						
 
-            width=8 border=0></TD>
-      <TD align=right background="img/border/b_1.gif" height=8><IMG 
-
-            height=8 src="img/border/c_1.gif" width=34 border=0></TD>
-      <TD width=8 height=8><IMG height=8 src="img/border/d_1.gif" 
-
-            width=8 border=0></TD>
-    </TR>
-    <TR>
-      <TD vAlign=top width=8 background="img/border/a_3.gif"><IMG 
-
-            height=32 src="img/border/a_2.gif" width=8 border=0></TD>
-      <TD bgColor=#ffffff><table border="0" cellpadding="6" cellspacing="0">
-        <tr>
-          <td><img src="img/404.jpg" width="300" height="289" border="0"></td>
-        </tr>
-        <tr>
-          <td align="center"><div align="center"><strong>您访问的页面不存在！请检查网址是否正确。
-                <br/>
-            (错误代码:404)          </strong></div></td>
-        </tr>
-      </table></TD>
-      <TD vAlign="bottom" width=8 background="img/border/d_2.gif"><IMG 
-
-            height=24 src="img/border/d_3.gif" width=8 border=0></TD>
-    </TR>
-    <TR>
-      <TD width=8 height=8><IMG height=8 src="img/border/a_4.gif" 
-
-            width=8 border=0></TD>
-      <TD align=left background="img/border/c_4.gif" height=8><IMG 
-
-            height=8 src="img/border/b_4.gif" width=25 border=0></TD>
-      <TD width=8 height=8><IMG height=8 src="img/border/d_4.gif" 
-
-            width=8 border=0></TD>
-    </TR>
-  </TBODY>
-</TABLE>
-       	  <!--中栏内容填入此处以上 end--></div>
-
-							
-						</div><!--end of .the-post -->
-						
-					</div><!-- end of each post -->
-					
-				</div><!-- end of #posts -->
-			</div><!-- end of #wide-column -->
+			  </div><!-- end of #posts -->
+			</div>
+			<!-- end of #wide-column -->
 		<span class="clearfix"></span>
 		</div><!-- end of #content -->
 		

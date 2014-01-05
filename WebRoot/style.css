@@ -180,7 +180,14 @@
 /*** 04. Content ***/
 	#content {font-size: 0.95em;}
 		#content p {margin: 15px 0; color: #555;}
-	.postcontent, .postcontent  a{
+	.postcontent{
+		text-decoration:none;
+		font-size:1em;
+		color:#555;
+		margin-left:8px;
+		height:155px;
+	}
+	.postcontent  a{
 		text-decoration:none;
 		font-size:1em;
 		color:#555;
@@ -211,7 +218,7 @@
 	span.date {	color: #999; padding-left: 22px; display: block; background: url(images/icon-date.png) no-repeat; font-size: 0.9em;
 	line-height:18px; margin-bottom: 10px; }
 	
-	img.post-thumb { border: 1px solid #666;float: left; margin: 0 12px 12px 0;}
+	img.post-thumb { border: 1px solid #666;float: left; margin: 0 12px 12px 0; height:150px;}
 	.portfolio 	img.post-thumb { margin: 0 20px 20px 0;}
 	
 	

@@ -1,6 +1,16 @@
 <%@ page language="java" import="java.util.*,cn.edu.hbcit.jsj.software.bean.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+ArrayList list1 = new ArrayList();
 
+String realPath = request.getRealPath("\\WEB-INF\\db\\hbcitsoftware.mdb");//Access数据库绝对路径
+ConnBean cb = new ConnBean();
+cb.getConn(realPath);
+list1 = cb.selectGalleryThumb("6", 1);//相册1(专业风采)的缩略图查询4张
+cb.close();
+
+pageContext.setAttribute("thumb1",list1);
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>                                                                                                                                              
@@ -130,12 +140,9 @@
 						<ul>
 							<li>
                             <div id="gallery">
-								<a href="images/computer.png"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-3.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-4.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
+								<c:forEach var="mynews" items="${pageScope.thumb1}" varStatus="countItem">
+								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+								</c:forEach>
                             </div>
 								<span class="clearfix"></span>
 							</li>

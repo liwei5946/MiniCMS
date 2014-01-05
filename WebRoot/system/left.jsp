@@ -162,7 +162,7 @@ H1 a {
           <li><a href="http://www.865171.cn" target="main">管理链接</a></li>
         </ul>
       </div>
-      <h1 class="type"><a href="javascript:void(0)">系统帐户管理</a></h1>
+      <h1 class="type"><a href="javascript:void(0)">图片相册管理</a></h1>
       <div class="content">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
@@ -170,7 +170,7 @@ H1 a {
           </tr>
         </table>
         <ul class="MM">
-          <li><a href="admin_changepsw.jsp" target="main">修改密码</a></li>
+          <li><a href="gallery_add.jsp" target="main">添加图片</a></li>
           <li><a href="http://www.865171.cn" target="main">信息类型</a></li>
           <li><a href="http://www.865171.cn" target="main">资讯分类</a></li>
           <li><a href="http://www.865171.cn" target="main">地区设置</a></li>
@@ -190,7 +190,7 @@ H1 a {
         </table>
         <ul class="MM">
 		  <li><a href="admin_log.jsp" target="main">登录日志</a></li>
-          <li><a href="http://www.865171.cn" target="main">张贴管理</a></li>
+          <li><a href="admin_changepsw.jsp" target="main">修改密码</a></li>
           <li><a href="http://www.865171.cn" target="main">增加商家</a></li>
           <li><a href="http://www.865171.cn" target="main">管理商家</a></li>
           <li><a href="http://www.865171.cn" target="main">发布资讯</a></li>

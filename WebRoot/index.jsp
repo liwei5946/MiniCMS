@@ -6,18 +6,22 @@ ArrayList list2 = new ArrayList();
 ArrayList list3 = new ArrayList();
 ArrayList list4 = new ArrayList();
 ArrayList list5 = new ArrayList();
-ArrayList list6 = new ArrayList();
-ArrayList list7 = new ArrayList();
+//ArrayList list6 = new ArrayList();
+//ArrayList list7 = new ArrayList();
 String realPath = request.getRealPath("\\WEB-INF\\db\\hbcitsoftware.mdb");//Access数据库绝对路径
 ConnBean cb = new ConnBean();
 cb.getConn(realPath);
 list1 = cb.selectNewsForInnerobtainjsp(26, 1, "1", 8);//标题字数|新闻类型|当前页码|每页显示记录的数量
 list2 = cb.selectNewsForInnerobtainjsp(26, 2, "1", 8);
 list3 = cb.selectNewsForInnerobtainjsp(26, 3, "1", 6);
+list4 = cb.selectGalleryThumb("4", 1);//相册1的缩略图查询4张
+list5 = cb.selectGalleryThumb("4", 2);//相册2的缩略图查询4张
 cb.close();
 pageContext.setAttribute("news1",list1);
 pageContext.setAttribute("news2",list2);
 pageContext.setAttribute("news3",list3);
+pageContext.setAttribute("thumb1",list4);
+pageContext.setAttribute("thumb2",list5);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -135,11 +139,10 @@ pageContext.setAttribute("news3",list3);
 						<img class="shade" src="images/heading-shade.png" alt="" />
 						<ul>
 							<li>
-								<a href="#"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-3.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-4.jpg" alt="" /></a>
-								<p><a class="bt-flickr" href="#"><span>See More Images</span></a></p>
+							<c:forEach var="mynews" items="${pageScope.thumb1}" varStatus="countItem">
+								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+							</c:forEach>
+								<p><a class="bt-flickr" href="gallery.jsp" target="_blank"><span>See More Images</span></a></p>
 								<span class="clearfix"></span>
 							</li>
 						</ul><!-- end of inner list -->
@@ -149,11 +152,10 @@ pageContext.setAttribute("news3",list3);
 						<img class="shade" src="images/heading-shade.png" alt="" />
 						<ul>
 							<li>
-								<a href="#"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-3.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-4.jpg" alt="" /></a>
-								<p><a class="bt-flickr" href="#"><span>See More Images</span></a></p>
+							<c:forEach var="mynews" items="${pageScope.thumb2}" varStatus="countItem">
+								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+							</c:forEach>
+								<p><a class="bt-flickr" href="gallery.jsp" target="_blank"><span>See More Images</span></a></p>
 								<span class="clearfix"></span>
 							</li>
 						</ul><!-- end of inner list -->
@@ -164,7 +166,7 @@ pageContext.setAttribute("news3",list3);
 			<div id="home-blogposts">
 				<h3>新闻资讯</h3>
 				<img class="shade" src="images/heading-shade.png" alt="" />
-				<div id="posts" class="home">
+				<div id="posts" class="home" style="height:190px;">
 					<ul>
 						<li>
 							<div class="postcontent">
@@ -185,7 +187,7 @@ pageContext.setAttribute("news3",list3);
                 
                 <h3>通知公告</h3>
 				<img class="shade" src="images/heading-shade.png" alt="" />
-				<div id="posts" class="home">
+				<div id="posts" class="home"  style="height:190px;">
 					<ul>
 						<li>
 							<div class="postcontent">
@@ -205,7 +207,7 @@ pageContext.setAttribute("news3",list3);
                 
                 <h3>行业动态</h3>
 				<img class="shade" src="images/heading-shade.png" alt="" />
-				<div id="posts" class="home">
+				<div id="posts" class="home" style="height:150px;">
 					<ul>
 						<li>
 							<div class="postcontent">

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>                                                                                                                                              
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Portfolious - Professional Business &amp; Portfolio Theme</title>
+		
+		<!-- general styles -->
+		<link rel="stylesheet" href="inc/styles//reset.css" type="text/css" />
+		<link rel="stylesheet" href="style.css" type="text/css"/>
+		
+        <!-- Javascript Library (jQuery) & Plugins -->
+		<script type="text/javascript" src="inc/js/lib/jquery.js"></script>
+		<script type="text/javascript" src="inc/js/lib/easing.js"></script>
+		<script type="text/javascript" src="inc/js/lib/jcarousel.js"></script>
+		<script type="text/javascript" src="inc/js/portfolious.js"></script>
+		
+		<!-- IE Conditionals -->
+		<!--[if IE 6]>
+			<link rel="stylesheet" href="inc/ie6.css" type="text/css" />
+			<script src="inc/js/lib/DD_belatedPNG.js"></script>
+			<script>DD_belatedPNG.fix('h1 a, .shade, a.home-read-more-button, #featured-images, span.glare, .sub, #header fieldset label, a#monofactor span');</script>
+		<![endif]-->
+		
+		<!--[if IE 7]>
+			<link rel="stylesheet" href="inc/ie7.css" type="text/css" />
+		<![endif]-->
+		
+	</head>
+	
+	
+<body>
+<div id="container-wrap" class="sub"><!-- sub page background override -->
+	<div id="container">
+		
+		<div id="header">
+			<h1><a href="#">Portfolious</a></h1><!-- logo -->
+			
+			<ul><!-- main navigation -->
+				<li><a href="index.html"><span>Home</span></a></li>
+				<li><a href="page-template.html"><span>About Us</span></a></li>
+				<li class="active"><a href="portfolio-listing.html"><span>Portfolio</span></a></li>
+				<li><a href="blog-listing.html"><span>Blog</span></a></li>
+				<li><a href="contact.html"><span>Contact Us</span></a></li>
+			</ul>
+			
+			<fieldset>   
+					<legend title="Search">Search</legend>
+						<form name="search" action="" method="get">
+							<label><input type="text" name="s" id="q" onblur="if (this.value == '') {this.value = 'Search';}"  onfocus="if (this.value == 'Search') {this.value = '';}" value="Search" /></label>
+							<input type="submit" name="Search" class="hidden" />				
+						</form>								
+			</fieldset>
+			<span class="clearfix"></span>  	
+		</div><!-- end of #header -->
+		
+		<div id="content" class="sub">
+			<div id="sidebar">
+				<ul>
+					<li>
+						<h3>Portfolio Categories</h3>
+						<img class="shade" src="images/heading-shade.png" alt="" />
+						<ul class="cats">
+							<li class="active"><a href="#"><span>Web Design</span></a></li>
+							<li><a href="#"><span>Graphic Design</span></a></li>
+							<li><a href="#"><span>UI Design</span></a></li>
+						</ul><!-- end of inner list -->
+						<span class="clearfix"></span>
+					</li>
+					
+					<li class="testimonials">
+						<h3>Client Testimonials</h3>
+						<img class="shade" src="images/heading-shade.png" alt="" />
+						<div class="testimonial-list"><ul>
+							<li>
+							<blockquote>
+							<p>Aliquam lectus orci, adipiscing et, sodales ac, feugiat non, lacus. </p>
+
+							<p>Ut dictum velit nec est. </p>
+
+							<p>Quisque posuere, purus sit amet malesuada blandit, sapien sapien auctor arcu, sed pulvinar felis mi sollicitudin tortor.</p>
+							</blockquote>
+							<p>John Doe, <span>Lipsum LLC.</span></p>
+							</li>
+						</ul></div><!-- end of inner list -->
+						
+						<ul class="testimonials-nav">
+							<li class="prev"><a href="#"><span>Previous</span></a></li>
+							<li class="next"><a href="#"><span>Next</span></a></li>
+						</ul>
+						<span class="clearfix"></span>
+					</li>
+					
+					
+					<li class="twitter">
+						<h3>Twitter</h3>
+						<img class="shade" src="images/heading-shade.png" alt="" />
+						<div class="tweets"><ul>
+							<li>
+								<p>Lorem ipsum dolor <a href="#">sit amet</a> consectatum dis dolor avec num dis dolor vecta delipicitis.
+								Proque deca egitis lun pardita lipsum avec?</p>
+	
+								<p class="timeago">2 hours ago.</p>
+							</li>
+						</ul>
+						</div><!-- end of inner list -->
+						<p><a href="#" class="bt arrowedbt"><span>Follow Us!</span></a></p>						
+						<ul class="twitter-nav">
+							<li class="prev"><a href="#"><span>Previous</span></a></li>
+							<li class="next"><a href="#"><span>Next</span></a></li>
+						</ul>
+						<span class="clearfix"></span>
+					</li>
+					
+					<li class="flickr sideflickr">
+						<h3>Flickr</h3>
+						<img class="shade" src="images/heading-shade.png" alt="" />
+						<ul>
+							<li>
+								<a href="#"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-3.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-4.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
+								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
+								<span class="clearfix"></span>
+							</li>
+						</ul><!-- end of inner list -->
+					</li>
+				</ul><!-- end of sidebar list -->
+			</div><!-- end of #sidebar-->
+			<div id="wide-column">
+				<h2>Latest Works</h2>
+				<img class="shade" src="images/heading-shade.png" alt="" />
+				<div id="posts" class="portfolio">
+							<div class="each-post postcontent">
+								<img src="images/dummy-portfolio-item1.jpg" alt="" class="post-thumb"/>
+								<h4 class="portfolio-titles"><a href="portfolio-item.html">Lorem Ipsum Dolor Sit Amet Consecta</a></h4>
+								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem asi architecto beatae vitae dicta sunt explicabo.</p>
+								<p><a href="portfolio-item.html" class="bt arrowedbt"><span>View Work</span></a></p>						
+							</div>					
+							
+							<div class="each-post postcontent">
+								<img src="images/dummy-portfolio-item2.jpg" alt="" class="post-thumb"/>
+								<h4 class="portfolio-titles"><a href="portfolio-item.html">Lorem Ipsum Dolor Sit Amet Consecta</a></h4>
+								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem asi architecto beatae vitae dicta sunt explicabo.</p>
+								<p><a href="portfolio-item.html" class="bt arrowedbt"><span>View Work</span></a></p>						
+							</div>	
+							
+							<div class="each-post postcontent">
+								<img src="images/dummy-portfolio-item3.jpg" alt="" class="post-thumb"/>
+								<h4 class="portfolio-titles"><a href="portfolio-item.html">Lorem Ipsum Dolor Sit Amet Consecta</a></h4>
+								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem asi architecto beatae vitae dicta sunt explicabo.</p>
+								<p><a href="portfolio-item.html" class="bt arrowedbt"><span>View Work</span></a></p>						
+							</div>	
+							
+							<div class="each-post postcontent">
+								<img src="images/dummy-portfolio-item2.jpg" alt="" class="post-thumb"/>
+								<h4 class="portfolio-titles"><a href="portfolio-item.html">Lorem Ipsum Dolor Sit Amet Consecta</a></h4>
+								<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem asi architecto beatae vitae dicta sunt explicabo.</p>
+								<p><a href="portfolio-item.html" class="bt arrowedbt"><span>View Work</span></a></p>						
+							</div>		
+							
+							<a href="#" class="bt arrowedbt left left-button"><span>Previous Page</span></a> 
+							<p class="right"><a href="#" class="bt arrowedbt"><span>Next Page</span></a></p>						
+
+				</div><!-- end of #posts -->
+			</div><!-- end of #wide-column -->
+		<span class="clearfix"></span>
+		</div><!-- end of #content -->
+		
+	</div><!-- end of #container -->
+			<div class="push"></div>
+	</div>
+
+	<div id="footer-wrap">
+		<div id="footer">
+			<ul id="nav-footer"><!-- footer navigation -->
+						<li class="active"><a href="#"><span>Home</span></a></li>
+						<li><a href="#"><span>About Us</span></a></li>
+						<li><a href="#"><span>Portfolio</span></a></li>
+						<li><a href="#"><span>Blog</span></a></li>
+						<li><a href="#"><span>Contact Us</span></a></li>
+			</ul>
+			<a href="http://www.cssmoban.com" id="monofactor">Theme by &nbsp; <span>Monofactor</span></a>		
+			<span class="clearfix"></span>
+		</div><!-- end of #footer -->
+	</div>
+
+</body>                                                                                                                                         
+</html>

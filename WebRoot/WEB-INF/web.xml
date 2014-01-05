@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" 
+	xmlns="http://java.sun.com/xml/ns/j2ee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+		<servlet>
+		<servlet-name>Connector</servlet-name>
+		<servlet-class>com.fredck.FCKeditor.connector.ConnectorServlet</servlet-class>
+		<init-param>
+			<param-name>baseDir</param-name>
+			<param-value>/UserFiles/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>SimpleUploader</servlet-name>
+		<servlet-class>com.fredck.FCKeditor.uploader.SimpleUploaderServlet</servlet-class>
+		<init-param>
+			<param-name>baseDir</param-name>
+			<param-value>/UserFiles/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>enabled</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>AllowedExtensionsFile</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<param-name>DeniedExtensionsFile</param-name>
+			<param-value>php|php3|php5|phtml|asp|aspx|ascx|jsp|cfm|cfc|pl|bat|exe|dll|reg|cgi</param-value>
+		</init-param>
+		<init-param>
+			<param-name>AllowedExtensionsImage</param-name>
+			<param-value>jpg|gif|jpeg|png|bmp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DeniedExtensionsImage</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<param-name>AllowedExtensionsFlash</param-name>
+			<param-value>swf|fla</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DeniedExtensionsFlash</param-name>
+			<param-value></param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+  <servlet>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.Login</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.Logout</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddNews</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.AddNews</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SelectArticle</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.SelectArticle</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DeleteArticle</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.DeleteArticle</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>VerifyCode</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.VerifyCode</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdatePassword</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.UpdatePassword</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DeleteFile</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.DeleteFile</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DeleteImages</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.DeleteImages</servlet-class>
+  </servlet>
+
+
+
+
+
+
+
+
+
+
+
+  <servlet-mapping>
+    <servlet-name>Connector</servlet-name>
+    <url-pattern>/FCKeditor/editor/filemanager/browser/default/connectors/jsp/connector</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SimpleUploader</servlet-name>
+    <url-pattern>/FCKeditor/editor/filemanager/upload/simpleuploader</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddNews</servlet-name>
+    <url-pattern>/AddNews</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SelectArticle</servlet-name>
+    <url-pattern>/SelectArticle</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteArticle</servlet-name>
+    <url-pattern>/DeleteArticle</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>VerifyCode</servlet-name>
+    <url-pattern>/VerifyCode</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdatePassword</servlet-name>
+    <url-pattern>/UpdatePassword</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteFile</servlet-name>
+    <url-pattern>/DeleteFile</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteImages</servlet-name>
+    <url-pattern>/DeleteImages</url-pattern>
+  </servlet-mapping>  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+    <!-- Login Check begin -->
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>cn.edu.hbcit.jsj.software.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- Login Check end-->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsp</location>
+	</error-page>
+</web-app>

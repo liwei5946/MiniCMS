@@ -1,0 +1,159 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
+<meta http-equiv="expires" content="0" />
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shCore.js" ></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushCSharp.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushPhp.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushJScript.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushVb.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushSql.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushXml.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushDelphi.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushPython.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushRuby.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushCss.js"></script>
+<script type="text/javascript" src="dp.SyntaxHighlighter/Scripts/shBrushCpp.js"></script>
+<title>插入代码</title>
+<script language="javascript" type="text/javascript">
+var oEditor = window.parent.InnerDialogLoaded() ;
+var FCKLang = oEditor.FCKLang ;
+var FCKHighLighter = oEditor.FCKHighLighter ;
+
+window.onload = function () {
+	oEditor.FCKLanguageManager.TranslatePage( document ) ;
+	window.parent.SetOkButton( true ) ;	
+
+	LoadSelected();
+    document.getElementById("code").focus();
+}
+
+function Ok()
+{
+	if(document.getElementById("code").value.length==0)
+	{
+		alert(FCKLang['CodeErrNoName']);
+		return false;
+	}	
+//	dp.SyntaxHighlighter.ClipboardSwf = 'dp.SyntaxHighlighter/Scripts/clipboard.swf';
+	var result=dp.SyntaxHighlighter.HighlightAll('code',0,1,0,1,0);
+	
+	var str = "";
+	for(key in result)
+	{
+		str += result[key][0];
+	}
+	FCKHighLighter.Add( str ) ;
+	return true ;
+}
+
+var eSelected = oEditor.FCKSelection.GetSelectedElement() ;
+function LoadSelected()
+{
+	if ( !eSelected ){ return ;}
+	if ( eSelected.tagName == 'DIV' && eSelected.className=="dp-highlighter" )
+	{
+	    var ol = eSelected.document.getElementsByTagName("ol");     //火狐下提示这里出错
+		var codeClass = ol[0].className.substring(3,ol[0].className.length);
+	    var ddlv='';
+	    switch(codeClass){
+	        case "cpp":
+	            document.getElementById("code").className="cpp";
+	            ddlv="cpp";
+	            break;
+	        case "c": //c#,javascript php 不明白为什么这三种语言的CSS名都是dp-c,所以区分不了
+	            document.getElementById("code").className="csharp";
+	            ddlv="c#";
+	            break;
+	         case "css":
+	            document.getElementById("code").className="css";
+	            ddlv="css";
+	            break;
+	         case "delphi":
+	            document.getElementById("code").className="delphi";
+	            ddlv="delphi";
+	            break;
+	         case "j":
+	            document.getElementById("code").className="java";
+	            ddlv="java";
+	            break;
+	         case "py":
+	            document.getElementById("code").className="python";
+	            ddlv="python";
+	            break;
+	         case "rb":
+	            document.getElementById("code").className="ruby";
+	            ddlv="ruby";
+	            break;
+	          case "sql":
+	            document.getElementById("code").className="sql";
+	            ddlv="sql";
+	            break;
+	          case "vb":
+	            document.getElementById("code").className="vb";
+	            ddlv="vb";
+	            break;
+	           case "xml":
+	            document.getElementById("code").className="xml";
+	            ddlv="xml";
+	            break;
+	    }
+		var codeTypeNum = document.getElementById("codeType").options.length;
+		for(var i=0;i<codeTypeNum;i++)
+		{
+			if(document.getElementById("codeType").options[i].value == ddlv)
+			{
+				document.getElementById("codeType").options[i].selected = true;
+			}
+		}
+//		var codeContent = eSelected.nextSibling.innerHTML;
+	//	document.getElementById('code').value = codeContent.replace("&lt;" , "<");
+	//document.getElementById('code').value = codeContent.replace(/<[^>]+>/g, "");
+	
+	    if(navigator.userAgent.indexOf("MSIE")>0){
+	        document.getElementById('code').value = ol[0].innerText;
+	    }else{
+	        document.getElementById('code').value = ol[0].textContent;
+	    }
+	}
+	else eSelected == null ;
+}
+</script>
+</head>
+
+<body>
+    <table style="width:100%;">
+        <tr>
+            <td style="width:10%; line-height:25px;"><span fckLang="CodeDlgName"></span></td>
+            <td>
+                <select id="codeType" style="width:250px;" onchange="document.getElementById('code').className =this.value;">
+	                <option value="csharp">C#</option>
+	                <option value="php">PHP</option>
+	                <option value="javascript">Javascript</option>
+	                <option value="xml">Xml</option>
+	                <option value="xml">Html</option>
+	                <option value="css">Css</option>
+	                <option value="cpp">C/C++</option>
+	                <option value="delphi">Delphi</option>
+	                <option value="java">Java</option>
+	                <option value="python">Python</option>
+	                <option value="ruby">Ruby</option>
+	                <option value="sql">Sql</option>
+	                <option value="vb">VB</option>
+	            </select>	
+            </td>
+        </tr>
+        <tr>
+            <td><span fckLang="CodeArea"></span></td>
+            <td>
+                <textarea  rows="25" cols="80" class="csharp"   name="code" id="code"></textarea>
+            </td>
+       </tr>
+    </table>
+
+</body>
+</html>

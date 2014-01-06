@@ -169,28 +169,7 @@ public class ConnBean {
 	  }
 	  return list;
   }
-  /**
-   * 根据新闻类型编号，查询类型名称
-   * @param typeid
-   * @return
-   */
-	public String selectNewsTypeByTypeId(int typeid) {
-		String typeName = "";
-		try {
-			String SQL = "SELECT typename FROM articletype WHERE id = ? ";
-			pStatement = conn.prepareStatement(SQL);
-			pStatement.setInt(1, typeid);
-			rs = pStatement.executeQuery();
 
-			while (rs.next()) {
-				typeName = rs.getString("typename");
-				// log.debug("查询成功！");
-			}
-		} catch (SQLException sqlE) {
-			log.error(sqlE);
-		}
-		return typeName;
-	}
 /**
  * 内页信息查询
  * @param int titleSize 查询文件标题显示字数
@@ -872,4 +851,140 @@ public class ConnBean {
 		  }
 		  return list;
 	  }
+	  
+	  /**
+	   * 相册列表查询
+	   * @param String type 新闻类型
+	   * @param int curPage 当前页码
+	   * @param int perPage 每页显示记录的数量
+	   * @return ArrayList
+	   */  
+	    public ArrayList selectGalleryForInnerobtainjsp(int type, String cPage, int perPage){
+	  	  ArrayList list = new ArrayList();
+	  	  //SELECT TOP 5 id,title,shorttime,type FROM article WHERE type='通知公告'AND id NOT IN( SELECT TOP 15 id FROM article WHERE type='通知公告' ORDER BY id DESC ) ORDER BY id DESC
+	  	  //原sql语句:
+	  	  //SELECT id,title,shorttime,type FROM article WHERE type=? ORDER BY shorttime DESC
+	  	  int curPage = 1;
+		  UtilTools ut = new UtilTools();
+		  if(ut.isNumeric(cPage)){	//判断cPage是否是整型数据
+			  curPage = Integer.parseInt(cPage);
+			  log.debug("curPage: "+curPage);
+		  }
+		  if(curPage>0 && perPage>0){  //检验传递参数是否合法
+			  //pageSize = perPage;			  
+			  //showPage = curPage;
+			  this.setPageSize(perPage);//每页显示的文章数
+			  this.setShowPage(curPage);//当前页面显示的页号
+			  log.debug("getPageSize(): "+this.getPageSize());
+			  log.debug("getShowPage(): "+this.getShowPage());
+		  }
+		  String SQL = "";
+		  
+	  	  try{
+	  		if(this.getShowPage()==1){	//如果页码是1，则直接执行取前N条记录
+	  			SQL = "SELECT TOP "+String.valueOf(this.getPageSize())+" id,title,content,imagepath FROM gallery WHERE type=? ORDER BY publishtime DESC";
+	    		pStatement = conn.prepareStatement(SQL);
+	    		pStatement.setInt(1, type);
+	    		rs = pStatement.executeQuery();
+	  		}else if(this.getShowPage()>1){	//如果页码大于1，则执行分页算法
+//	  			SQL = "SELECT TOP "+String.valueOf(this.getPageSize())+" id,title,shorttime,type FROM article WHERE type=? AND id NOT IN( SELECT TOP "+String.valueOf((this.getShowPage()-1)*this.getPageSize())+" id FROM article WHERE type=? ORDER BY id DESC ) ORDER BY id DESC";
+	  			SQL = "SELECT TOP "+String.valueOf(this.getPageSize())+" id,title,content,imagepath FROM gallery WHERE type=? AND id NOT IN( SELECT TOP "+String.valueOf((this.getShowPage()-1)*this.getPageSize())+" id FROM gallery WHERE type=? ORDER BY publishtime DESC ) ORDER BY publishtime DESC";
+	    		pStatement = conn.prepareStatement(SQL);
+	    		pStatement.setInt(1, type);
+	    		pStatement.setInt(2, type);
+	    		rs = pStatement.executeQuery();
+	  		}
+	  		  
+	  		  
+	  		  while (rs.next()) {
+	  		    	DBBean db = new DBBean();
+	  		        db.setNewsId(rs.getInt("id"));
+	  		        db.setTitle(rs.getString("title"));
+	  		        db.setContent(rs.getString("content"));
+	  		        db.setFilename(rs.getString("imagepath"));
+	  		        
+	  		        list.add(db);
+	  		      }
+	  	  }catch(SQLException sqlE){
+	  		  log.error(sqlE);
+	  	  }
+	  	  return list;
+	    }
+	    
+	    /**
+	     * 根据新闻类型编号，查询类型名称
+	     * @param typeid
+	     * @return
+	     */
+	  	public String selectNewsTypeByTypeId(int typeid) {
+	  		String typeName = "";
+	  		try {
+	  			String SQL = "SELECT typename FROM articletype WHERE id = ? ";
+	  			pStatement = conn.prepareStatement(SQL);
+	  			pStatement.setInt(1, typeid);
+	  			rs = pStatement.executeQuery();
+
+	  			while (rs.next()) {
+	  				typeName = rs.getString("typename");
+	  				// log.debug("查询成功！");
+	  			}
+	  		} catch (SQLException sqlE) {
+	  			log.error(sqlE);
+	  		}
+	  		return typeName;
+	  	}
+	  	
+	    /**
+	     * 根据相册类型编号，查询类型名称
+	     * @param typeid
+	     * @return
+	     */
+	  	public String selectGalleryTypeByTypeId(int typeid) {
+	  		String typeName = "";
+	  		try {
+	  			String SQL = "SELECT typename FROM gallerytype WHERE id = ? ";
+	  			pStatement = conn.prepareStatement(SQL);
+	  			pStatement.setInt(1, typeid);
+	  			rs = pStatement.executeQuery();
+
+	  			while (rs.next()) {
+	  				typeName = rs.getString("typename");
+	  				// log.debug("查询成功！");
+	  			}
+	  		} catch (SQLException sqlE) {
+	  			log.error(sqlE);
+	  		}
+	  		return typeName;
+	  	}
+	  	
+	    /**
+	     * 内页查询(按栏目类型查询)总记录条数、总页数计算
+	     * @param int type
+	     * @return void
+	     */
+	    public void setInnerInfoForTypePageCountByGallery(int type){
+	    	  int count = 0;
+	    	  try{
+	    		  String SQL = "SELECT id FROM gallery WHERE type=?";
+	    		  pStatement = conn.prepareStatement(SQL);
+	    		  pStatement.setInt(1, type);
+	    		  rs = pStatement.executeQuery();
+	    		  
+	    		  while (rs.next()) {
+	    		    	count++;
+//	    		        log.debug("setInnerInfoForTypePageCount()查询计数成功！");
+	    		      }
+	    	  }catch(SQLException sqlE){
+	    		  log.error(sqlE);
+	    	  }
+	    	  this.setRsCount(count);//设置总记录数
+	    	  if(this.getRsCount() == 0){//当没有记录时，设置当前页数为1
+	    		  this.setPageCount(1);
+	    	  }else if(this.getRsCount() % this.getPageSize() == 0){
+	    		  //根据总行数计算总页数
+	    		  this.setPageCount(this.getRsCount() / this.getPageSize());
+	    	  }else{
+	    		this.setPageCount(this.getRsCount() / this.getPageSize() + 1);
+	    	  }
+	      }
 }

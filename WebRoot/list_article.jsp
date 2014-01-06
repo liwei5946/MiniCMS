@@ -18,6 +18,8 @@ if(type.equals("1")){
 	realType = 2;
 }else if(type.equals("3")){
 	realType = 3;
+}else{
+	realType = 1;//非法输入的类型id一律重置为1
 }
 int pageSize = 30;//设置每页显示记录数
 String pageNum = request.getParameter("jump");
@@ -27,7 +29,7 @@ if(pageNum == null ||pageNum.equals("")){
 ConnBean cb = new ConnBean();
 cb.getConn(realPath);
 list = cb.selectNewsForInnerobtainjsp(40, realType, pageNum, pageSize);
-list1 = cb.selectGalleryThumb("6", 1);//相册1(专业风采)的缩略图查询4张
+list1 = cb.selectGalleryThumb("6", 1);//相册1(专业风采)的缩略图查询6张
 typeName = cb.selectNewsTypeByTypeId(realType);
 cb.setInnerInfoForTypePageCount(realType);
 cb.close();
@@ -110,7 +112,7 @@ pageContext.setAttribute("thumb1",list1);
 			<h1><a href="#">Portfolious</a></h1><!-- logo -->
 			
 			<ul><!-- main navigation -->
-				<li class="active"><a href="index.html"><span>首页</span></a></li>
+				<li class="active"><a href="index.jsp"><span>首页</span></a></li>
 				<li><a href="page-template.html"><span>专业介绍</span></a></li>
 				<li><a href="portfolio-listing.html"><span>新闻资讯</span></a></li>
 				<li><a href="blog-listing.html"><span>通知公告</span></a></li>
@@ -172,7 +174,7 @@ pageContext.setAttribute("thumb1",list1);
 							<li>
                             <div id="gallery">
 								<c:forEach var="mynews" items="${pageScope.thumb1}" varStatus="countItem">
-								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+								<a href="${mynews.filename }"  title="${mynews.title }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
 								</c:forEach>
                             </div>
 								<span class="clearfix"></span>

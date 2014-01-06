@@ -64,7 +64,7 @@ pageContext.setAttribute("thumb2",list5);
 			<h1><a href="index.html">Portfolious</a></h1><!-- logo -->
 			
 			<ul><!-- main navigation -->
-				<li class="active"><a href="index.html"><span>首页</span></a></li>
+				<li class="active"><a href="#"><span>首页</span></a></li>
 				<li><a href="page-template.html"><span>专业介绍</span></a></li>
 				<li><a href="portfolio-listing.html"><span>新闻资讯</span></a></li>
 				<li><a href="blog-listing.html"><span>通知公告</span></a></li>
@@ -140,9 +140,9 @@ pageContext.setAttribute("thumb2",list5);
 						<ul>
 							<li>
 							<c:forEach var="mynews" items="${pageScope.thumb1}" varStatus="countItem">
-								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+								<a href="gallery.jsp?gID=1" title="${mynews.title }" target="_blank"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
 							</c:forEach>
-								<p><a class="bt-flickr" href="gallery.jsp" target="_blank"><span>See More Images</span></a></p>
+								<p><a class="bt-flickr" href="gallery.jsp?gID=1" target="_blank"><span>See More Images</span></a></p>
 								<span class="clearfix"></span>
 							</li>
 						</ul><!-- end of inner list -->
@@ -153,9 +153,9 @@ pageContext.setAttribute("thumb2",list5);
 						<ul>
 							<li>
 							<c:forEach var="mynews" items="${pageScope.thumb2}" varStatus="countItem">
-								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+								<a href="gallery.jsp?gID=2" title="${mynews.title }"  target="_blank"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
 							</c:forEach>
-								<p><a class="bt-flickr" href="gallery.jsp" target="_blank"><span>See More Images</span></a></p>
+								<p><a class="bt-flickr" href="gallery.jsp?gID=2" target="_blank"><span>See More Images</span></a></p>
 								<span class="clearfix"></span>
 							</li>
 						</ul><!-- end of inner list -->

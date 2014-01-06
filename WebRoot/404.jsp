@@ -79,7 +79,7 @@ pageContext.setAttribute("thumb1",list1);
 			<h1><a href="#">Portfolious</a></h1><!-- logo -->
 			
 			<ul><!-- main navigation -->
-				<li class="active"><a href="index.html"><span>首页</span></a></li>
+				<li class="active"><a href="index.jsp"><span>首页</span></a></li>
 				<li><a href="page-template.html"><span>专业介绍</span></a></li>
 				<li><a href="portfolio-listing.html"><span>新闻资讯</span></a></li>
 				<li><a href="blog-listing.html"><span>通知公告</span></a></li>
@@ -141,7 +141,7 @@ pageContext.setAttribute("thumb1",list1);
 							<li>
                             <div id="gallery">
 								<c:forEach var="mynews" items="${pageScope.thumb1}" varStatus="countItem">
-								<a href="${mynews.filename }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+								<a href="${mynews.filename }" title="${mynews.title }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
 								</c:forEach>
                             </div>
 								<span class="clearfix"></span>
@@ -154,8 +154,8 @@ pageContext.setAttribute("thumb1",list1);
 			<div id="wide-column">
 				<h2>404 Error Page</h2>
 				<img class="shade" src="images/heading-shade.png" alt="" />
-				<div id="posts" class="blog">
-					<div class="each-post postcontent">			        	
+				<div id="posts" class="blog" style="height:350px;">
+					<div class="each-post postcontent" style="height:350px;">			        	
 			        	<div class="the-post">
 							
             <div align="center">

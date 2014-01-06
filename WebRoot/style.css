@@ -185,13 +185,23 @@
 		font-size:1em;
 		color:#555;
 		margin-left:8px;
-		height:155px;
+		/*height:155px;*/
 	}
 	.postcontent  a{
 		text-decoration:none;
 		font-size:1em;
 		color:#555;
 		margin-left:8px;
+	}
+	.explorer  a{
+		text-decoration:none;
+		font-size:1em;
+		color:#555;
+	}
+	.explorer {
+		text-decoration:none;
+		font-size:1em;
+		color:#555;
 	}
 /** 04.a - Home Sidebar and Sidebar General **/
 	#sidebar-home {width: 435px; float: left;}

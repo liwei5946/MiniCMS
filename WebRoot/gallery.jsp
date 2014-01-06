@@ -3,8 +3,9 @@
 
 <%
 ArrayList list = new ArrayList();
+ArrayList list1 = new ArrayList();
 String realPath = request.getRealPath("\\WEB-INF\\db\\hbcitsoftware.mdb");//Access数据库绝对路径
-String type = request.getParameter("tID");
+String type = request.getParameter("gID");
 String typeName = "";
 int realType = 1;
 if(type == null){
@@ -14,19 +15,22 @@ if(type.equals("1")){
 	realType = 1;
 }else if(type.equals("2")){
 	realType = 2;
-}else if(type.equals("3")){
-	realType = 3;
+}else{
+	realType = 1; //非法输入的类型id一律重置为1
 }
-int pageSize = 30;//设置每页显示记录数
+int pageSize = 4;//设置每页显示记录数
 String pageNum = request.getParameter("jump");
 if(pageNum == null ||pageNum.equals("")){
 	pageNum = "1";
 }
 ConnBean cb = new ConnBean();
 cb.getConn(realPath);
-list = cb.selectNewsForInnerobtainjsp(40, realType, pageNum, pageSize);
-typeName = cb.selectNewsTypeByTypeId(realType);
-cb.setInnerInfoForTypePageCount(realType);
+list1 = cb.selectGalleryThumb("6", 1);//相册1(专业风采)的缩略图查询6张
+//list = cb.selectNewsForInnerobtainjsp(40, realType, pageNum, pageSize);
+list = cb.selectGalleryForInnerobtainjsp(realType, pageNum, pageSize);
+typeName = cb.selectGalleryTypeByTypeId(realType);
+//cb.setInnerInfoForTypePageCount(realType);
+cb.setInnerInfoForTypePageCountByGallery(realType);
 cb.close();
 pageContext.setAttribute("news",list);
 pageContext.setAttribute("maxCount",new Integer(cb.getRsCount()));
@@ -34,6 +38,7 @@ pageContext.setAttribute("pageCount",new Integer(cb.getPageCount()));
 pageContext.setAttribute("nowPage",new Integer(cb.getShowPage()));
 pageContext.setAttribute("pageSize",new Integer(pageSize));
 pageContext.setAttribute("typeName",typeName);
+pageContext.setAttribute("thumb1",list1);
 //System.out.println(pageContext.getAttribute("nowPage"));
 //System.out.println(pageContext.getAttribute("pageCount"));
 %>
@@ -106,7 +111,7 @@ pageContext.setAttribute("typeName",typeName);
 			<h1><a href="#">Portfolious</a></h1><!-- logo -->
 			
 			<ul><!-- main navigation -->
-				<li class="active"><a href="index.html"><span>首页</span></a></li>
+				<li class="active"><a href="index.jsp"><span>首页</span></a></li>
 				<li><a href="page-template.html"><span>专业介绍</span></a></li>
 				<li><a href="portfolio-listing.html"><span>新闻资讯</span></a></li>
 				<li><a href="blog-listing.html"><span>通知公告</span></a></li>
@@ -167,12 +172,9 @@ pageContext.setAttribute("typeName",typeName);
 						<ul>
 							<li>
                             <div id="gallery">
-								<a href="images/computer.png"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-3.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-4.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-1.jpg" alt="" /></a>
-								<a href="#"><img src="images/dummy-flickr-2.jpg" alt="" /></a>
+								<c:forEach var="mynews" items="${pageScope.thumb1}" varStatus="countItem">
+								<a href="${mynews.filename }"  title="${mynews.title }"><img src="${mynews.thumb }" alt="${mynews.title }" /></a>
+								</c:forEach>
                             </div>
 								<span class="clearfix"></span>
 							</li>
@@ -182,21 +184,46 @@ pageContext.setAttribute("typeName",typeName);
 				</ul><!-- end of sidebar list -->
 			</div><!-- end of #sidebar-->
             <div id="wide-column">
-				<h2>Latest Works</h2>
+				<h2>${pageScope.typeName }</h2>
 				<img class="shade" src="images/heading-shade.png" alt="" />
 				<div id="posts" class="portfolio">
+<c:forEach var="mynews" items="${pageScope.news}" varStatus="countItem">				
                 <!--each block begin-->
-                <div class="each-post postcontent" id="gallery">
+                <div class="each-post postcontent" id="gallery" style="height:160px;">
                 	
-                    <a href="images/dummy-portfolio-item1.jpg"><img src="images/dummy-portfolio-item1.jpg" alt="Lorem Ipsum Dolor Sit Amet Consecta" class="post-thumb"/></a>
+                    <a href="${mynews.filename}" title="${mynews.title}">
+                    <img src="${mynews.filename}" class="post-thumb"/>
+                    </a>
                     
-                    <h4 class="portfolio-titles">Lorem Ipsum Dolor Sit Amet Consecta</h4>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem asi architecto beatae vitae dicta sunt explicabo.</p>			
-                    <p><a href="images/dummy-portfolio-item1.jpg" class="bt arrowedbt"><span>点击查看大图</span></a></p>
+                    <h4 class="portfolio-titles">${mynews.title}</h4>
+                    ${mynews.content}			
+                    <p><a href="${mynews.filename}" class="bt arrowedbt"><span>点击查看大图</span></a></p>
                 </div>					
                 <!--each block end-->
-							<a href="#" class="bt arrowedbt left left-button"><span>Previous Page</span></a>
-<p class="right"><a href="#" class="bt arrowedbt"><span>Next Page</span></a></p>						
+</c:forEach>                
+
+				<div align="center" class="explorer">
+                每页${pageScope.pageSize}条&nbsp;&nbsp;
+                <c:if test="${pageScope.nowPage == 1}">
+                	首页&nbsp;上一页&nbsp;
+                </c:if>
+                <c:if test="${pageScope.nowPage != 1}">
+                    <a href="gallery.jsp?gID=<%=type%>&jump=1">首页</a>
+                    &nbsp;
+                    <a href="gallery.jsp?gID=<%=type%>&jump=${pageScope.nowPage - 1}">上一页</a>
+                    &nbsp;
+                </c:if>
+                第${pageScope.nowPage}页&nbsp;
+                <c:if test="${pageScope.nowPage == pageScope.pageCount}">
+                	下一页&nbsp;尾页
+                </c:if>
+                <c:if test="${pageScope.nowPage != pageScope.pageCount}">
+                    <a href="gallery.jsp?gID=<%=type%>&jump=${pageScope.nowPage + 1}">下一页</a>
+                    &nbsp;
+                    <a href="gallery.jsp?gID=<%=type%>&jump=${pageScope.pageCount}">尾页</a> 
+                </c:if>
+                &nbsp;&nbsp;共${pageScope.pageCount}页${pageScope.maxCount}篇文章
+                </div>						
 
 			  </div><!-- end of #posts -->
 			</div>

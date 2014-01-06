@@ -240,9 +240,9 @@ pageContext.setAttribute("thumb2",list5);
 		<div id="footer">
 			<ul id="nav-footer"><!-- footer navigation -->
 						<li class="active"><a href="#"><span>石家庄市红旗大街626号</span></a></li>
-						<li><a href="#"><span>Copyright &copy; 1996-2015 软件技术专业</span></a></li>
+						<li><a href="system/login.jsp" target="_blank"><span>Copyright &copy; 1996-2015 软件技术专业</span></a></li>
 			</ul>
-			<a href="http://www.hbcit.edu.cn" id="monofactor" target="_blank">河北工业职业技术学院 &middot; 计算机技术系</a>		
+			<a href="http://www.hbcit.edu.cn" id="monofactor" target="_blank">河北工业职业技术学院&nbsp;&middot;&nbsp;计算机技术系</a>	
 			<span class="clearfix"></span>
 		</div><!-- end of #footer -->
         

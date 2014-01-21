@@ -71,7 +71,7 @@ public class DeleteImages extends HttpServlet {
 			throws ServletException, IOException {
 
 		response.setContentType("text/html");
-		request.setCharacterEncoding("GB2312");
+		request.setCharacterEncoding("utf-8");
 		boolean fileFlag = false;
 		boolean dbFlag = false;
 		FileOperate fo = new FileOperate();
@@ -89,7 +89,7 @@ public class DeleteImages extends HttpServlet {
 				log.debug(fileName[i]+"数据库删除状态:"+dbFlag);
 			}
 		}
-		response.sendRedirect("manage_06.jsp");
+		response.sendRedirect("system/news_imagemanage.jsp");
 	}
 
 	/**

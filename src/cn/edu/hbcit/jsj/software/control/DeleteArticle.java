@@ -58,12 +58,12 @@ public class DeleteArticle extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		request.setCharacterEncoding("utf-8");
-		HttpSession session = request.getSession(false);
+		//HttpSession session = request.getSession(false);
 		String id = request.getParameter("aid");
 		
 		if(id.equals("")){
 			log.debug("删除失败");
-			session.setAttribute("msg", "删除失败,请从正常渠道访问本系统！");
+			request.setAttribute("msg", "删除失败,请从正常渠道访问本系统！");
 			//response.sendRedirect("system/error.jsp");
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/system/error.jsp");
 			rd.forward(request, response);

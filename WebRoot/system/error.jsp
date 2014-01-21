@@ -27,8 +27,8 @@ body {
           <tr>
             <td>
             <div>
-              <p style="color:#333333; font-size:12px;">亲爱的用户&nbsp;${sessionScope.USERNAME}：</p>
-              <p style="color:#FF0000; font-size:12px; font-weight:bold;">很遗憾，${sessionScope.msg}</p>
+              <p style="color:#333333; font-size:12px;">亲爱的用户&nbsp;${USERNAME}：</p>
+              <p style="color:#FF0000; font-size:12px; font-weight:bold;">很遗憾，${msg}</p>
               </div>
             </td>
   </tr>

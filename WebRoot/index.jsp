@@ -33,7 +33,7 @@ pageContext.setAttribute("thumb2",list5);
 		<link rel="icon" href="images/logo_hbcit.png"/>
 		<link rel="shortcut icon" href="images/logo_hbcit.png"/>
 		<!-- general styles -->
-		<link rel="stylesheet" href="inc/styles//reset.css" type="text/css" />
+		<link rel="stylesheet" href="inc/styles/reset.css" type="text/css" />
 		<link rel="stylesheet" href="style.css" type="text/css"/>
 		
         <!-- Javascript Library (jQuery) & Plugins -->

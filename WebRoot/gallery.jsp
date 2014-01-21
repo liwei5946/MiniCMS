@@ -54,7 +54,7 @@ pageContext.setAttribute("thumb1",list1);
 		<link rel="shortcut icon" href="images/logo_hbcit.png"/>
 		
 		<!-- general styles -->
-		<link rel="stylesheet" href="inc/styles//reset.css" type="text/css" />
+		<link rel="stylesheet" href="inc/styles/reset.css" type="text/css" />
         <link rel="stylesheet" href="inc/styles/jquery.lightbox-0.4.css" type="text/css"/>
 		<link rel="stylesheet" href="style.css" type="text/css"/>
 		
@@ -135,7 +135,7 @@ pageContext.setAttribute("thumb1",list1);
 						<h3>常用链接</h3>
 						<img class="shade" src="images/heading-shade.png" alt="" />
 						<ul class="cats">
-							<li class="active"><a href="http://www.hbcit.edu.cn" target="_blank"><span>学院首页</span></a></li>
+							<li><a href="http://www.hbcit.edu.cn" target="_blank"><span>学院首页</span></a></li>
 							<li><a href="http://jsjx.hbcit.edu.cn/" target="_blank"><span>计算机系</span></a></li>
 							<li><a href="http://jw.hbcit.edu.cn/" target="_blank"><span>教务系统</span></a></li>
                             <li><a href="http://222.30.178.10/" target="_blank"><span>学院内网</span></a></li>

@@ -5,7 +5,7 @@ ArrayList list = new ArrayList();
 String realPath = request.getRealPath("\\WEB-INF\\db\\hbcitsoftware.mdb");//Access数据库绝对路径
 ConnBean cb = new ConnBean();
 cb.getConn(realPath);
-list = cb.selectFileInfo();
+list = cb.selectImagesInfo();
 cb.close();
 pageContext.setAttribute("news",list);
 %>

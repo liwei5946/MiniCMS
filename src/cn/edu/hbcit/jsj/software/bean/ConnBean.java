@@ -987,4 +987,154 @@ public class ConnBean {
 	    		this.setPageCount(this.getRsCount() / this.getPageSize() + 1);
 	    	  }
 	      }
+	    
+	    /**
+	     * 内页信息查询（画廊）
+	     * @param int titleSize 查询文件标题显示字数
+	     * @param int curPage 当前页码
+	     * @param int perPage 每页显示记录的数量
+	     * @return ArrayList
+	     */  
+	      public ArrayList selectGalleryForInnerinfojsp(int titleSize, String cPage, int perPage){
+	    	  ArrayList list = new ArrayList();
+	    	  try{
+	    		  //SELECT TOP 10 id,title,shorttime,type FROM article WHERE id NOT IN (SELECT TOP 10 id FROM article ORDER BY id DESC) ORDER BY id DESC
+	    		  //SELECT TOP 5 id,title,shorttime,type FROM article WHERE (id >(SELECT MAX(id) FROM (SELECT TOP 5 id FROM article ORDER BY id)AS lee )) ORDER BY id DESC
+	    		  int curPage = 1;
+	    		  UtilTools ut = new UtilTools();
+	    		  if(ut.isNumeric(cPage)){	//判断cPage是否是整型数据
+	    			  curPage = Integer.parseInt(cPage);
+	    			  log.debug("curPage: "+curPage);
+	    		  }
+	    		  if(curPage>0 && perPage>0){  //检验传递参数是否合法
+	    			  //pageSize = perPage;			  
+	    			  //showPage = curPage;
+	    			  this.setPageSize(perPage);	//每页显示的文章数
+	    			  this.setShowPage(curPage);	//当前页面显示的页号
+	    			  log.debug("getPageSize(): "+this.getPageSize());
+	    			  log.debug("getShowPage(): "+this.getShowPage());
+	    		  }
+	    		  String SQL = "";
+	    		  if(this.getShowPage()==1){	//如果页码是1，则直接执行取前N条记录
+	    			  log.debug("this.getPageSize()"+this.getPageSize());
+	    			  //"+String.valueOf(this.getPageSize())+"
+	    			  SQL= "SELECT TOP "+String.valueOf(this.getPageSize())+" gallery.id,title,author,gallerytype.typename,shorttime,imagepath FROM gallery INNER JOIN gallerytype ON gallerytype.id=gallery.type ORDER BY gallery.id DESC";
+	    			  pStatement = conn.prepareStatement(SQL);
+	    			  //pStatement.setString(1, "20");
+	    			  //pStatement.setInt(1, this.getPageSize());
+	    			  rs = pStatement.executeQuery();
+	    		  }else if(this.getShowPage()>1){	//如果页码大于1，则执行分页SQL算法
+	    			  log.debug("this.getPageSize()"+this.getPageSize());
+	    			  //"+String.valueOf(this.getPageSize())+"
+	    			  //"+String.valueOf((this.getShowPage()-1)*this.getPageSize())+"
+	    			  SQL= "SELECT TOP "+String.valueOf(this.getPageSize())+" gallery.id,title,author,gallerytype.typename,shorttime,imagepath FROM gallery INNER JOIN gallerytype ON gallerytype.id=gallery.type WHERE gallery.id NOT IN (SELECT TOP "+String.valueOf((this.getShowPage()-1)*this.getPageSize())+" gallery.id FROM gallery ORDER BY gallery.id DESC) ORDER BY gallery.id DESC";
+	    			  pStatement = conn.prepareStatement(SQL);
+	    			  //pStatement.setInt(1, this.getPageSize());
+	    			  //pStatement.setInt(2, (this.getShowPage()-1)*this.getPageSize());
+	    			  rs = pStatement.executeQuery();
+	    		  }
+	    		  //pStatement = conn.prepareStatement(SQL);
+
+	    		  while (rs.next()) {
+	    		    	DBBean db = new DBBean();
+	    		    	String title = "";
+	    		        db.setNewsId(rs.getInt("id"));
+	    		        
+	    		        title = rs.getString("title");
+	    		        if(title.length() > titleSize){
+	    		        	db.setShortTitle(title.substring(0, titleSize)+"...");//获取指定长度的短标题
+	    		        }else{
+	    		        	db.setShortTitle(title);
+	    		        }
+	    		        
+	    		        db.setTitle(title);//获取原长度标题
+	    		        db.setAuthor(rs.getString("author"));
+	    		        db.setShorttime(rs.getString("shorttime"));
+	    		        db.setTypeName(rs.getString("typename"));
+	    		        db.setFilename(rs.getString("imagepath"));
+	    		        //db.setViewCount(rs.getInt("viewcount"));
+	    		        //db.setType(rs.getString("type"));
+	    		        
+	    		        list.add(db);
+	    		        log.debug("画廊信息查询成功！");
+	    		      }
+	    	  }catch(SQLException sqlE){
+	    		  log.error(sqlE);
+	    	  }
+	    	  return list;
+	      }
+	      /**
+	       * 内页查询总记录条数、总页数计算（画廊）
+	       * @return void
+	       */
+	      public void setInnerGalleryInfoPageCount(){
+	      	  int count = 0;
+	      	  try{
+	      		  String SQL = "SELECT id FROM gallery";
+	      		  pStatement = conn.prepareStatement(SQL);
+	      		  rs = pStatement.executeQuery();
+	      		  
+	      		  while (rs.next()) {
+	      		    	count++;
+	      		        log.debug("setInnerGalleryInfoPageCount()查询计数成功！");
+	      		      }
+	      	  }catch(SQLException sqlE){
+	      		  log.error(sqlE);
+	      	  }
+	      	  this.setRsCount(count);//设置总记录数
+	      	  if(this.getRsCount() % this.getPageSize() == 0){
+	      		  //根据总行数计算总页数
+	      		  this.setPageCount(this.getRsCount() / this.getPageSize());
+	      	  }else{
+	      		this.setPageCount(this.getRsCount() / this.getPageSize() + 1);
+	      	  }
+	        }
+	      /**
+	       * 删除数据库中的画廊信息
+	       * @param id
+	       * @return boolean
+	       */
+	      public boolean deleteGallery(String id){
+	    	  boolean flag = false;
+	    	  int articleId = Integer.parseInt(id);
+	    	  int state = 0;
+	    	  try{
+	    		  String SQL = "DELETE FROM gallery WHERE id=?";
+	    		  pStatement = conn.prepareStatement(SQL);
+	    		  pStatement.setInt(1, articleId);
+	    		  state = pStatement.executeUpdate();
+	    		  
+	    		  if(state > 0){
+	    			  flag = true;
+	    		  }
+	    	  }catch(SQLException sqlE){
+	    		  log.error(sqlE);
+	    	  }
+	    	  return flag;
+	      }
+	      /**
+	       * 查询文件系统中的画廊信息
+	       * @param id
+	       * @return String[]
+	       */
+	      public String[] selectGalleryFile(String id){
+	    	  int articleId = Integer.parseInt(id);
+	    	  int state = 0;
+	    	  String fileName[] = new String[2];
+	    	  try{
+	    		  String SQL_select = "SELECT imagepath,thumb FROM gallery WHERE id = ?";
+	    		  pStatement = conn.prepareStatement(SQL_select);
+	    		  pStatement.setInt(1, articleId);
+	    		  rs = pStatement.executeQuery();
+	    		  
+	    		  while (rs.next()) {
+	    			  fileName[0] = rs.getString("imagepath");
+	    			  fileName[1] = rs.getString("thumb");
+	    			  }
+	    		  
+	    	  }catch(SQLException sqlE){
+	    		  log.error(sqlE);
+	    	  }
+	    	  return fileName;
+	      }
 }

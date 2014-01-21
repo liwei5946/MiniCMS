@@ -22,7 +22,7 @@ pageContext.setAttribute("thumb1",list1);
 		<link rel="shortcut icon" href="images/logo_hbcit.png"/>
 		
 		<!-- general styles -->
-		<link rel="stylesheet" href="inc/styles//reset.css" type="text/css" />
+		<link rel="stylesheet" href="inc/styles/reset.css" type="text/css" />
         <link rel="stylesheet" href="inc/styles/jquery.lightbox-0.4.css" type="text/css"/>
 		<link rel="stylesheet" href="style.css" type="text/css"/>
 		

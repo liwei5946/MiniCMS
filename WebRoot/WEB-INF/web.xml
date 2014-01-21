@@ -101,6 +101,15 @@
     <servlet-name>AddGallery</servlet-name>
     <servlet-class>cn.edu.hbcit.jsj.software.control.AddGallery</servlet-class>
   </servlet>
+  <servlet>
+    <description>liwei</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>DeleteGallery</servlet-name>
+    <servlet-class>cn.edu.hbcit.jsj.software.control.DeleteGallery</servlet-class>
+  </servlet>
+
+
+
 
 
 
@@ -161,6 +170,10 @@
   <servlet-mapping>
     <servlet-name>AddGallery</servlet-name>
     <url-pattern>/AddGallery</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteGallery</servlet-name>
+    <url-pattern>/DeleteGallery</url-pattern>
   </servlet-mapping>  
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
